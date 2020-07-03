@@ -16,6 +16,11 @@ public class Follow : MonoBehaviour
     public float distance;
 
 
+
+    public bool left;
+    public bool closed;
+
+
     private void Update()
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -26,12 +31,43 @@ public class Follow : MonoBehaviour
 
     private void LateUpdate()
     {
+        
+        if(left)
+        {
+            if(!closed && Input.GetMouseButtonDown(0))
+            {
+                visualEffect.Stop();
+                closed = !closed;
+            }
+            else if (closed && Input.GetMouseButtonDown(0))
+            {
+                visualEffect.Play();
+                closed = !closed;
+            }
+        }
+        else
+        {
+            if (!closed && Input.GetMouseButtonDown(1))
+            {
+                visualEffect.Stop();
+
+                closed = !closed;
+            }
+            else if (closed && Input.GetMouseButtonDown(1))
+            {
+                visualEffect.Play();
+
+                closed = !closed;
+            }
+        }
+
 
         var pos = target.transform.position - transform.position;
 
         visualEffect.SetFloat("strength", strength);
         visualEffect.SetVector3("target", pos);
-        
+
+
     }
 
 
